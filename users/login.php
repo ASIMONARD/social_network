@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Mon réseau social</title>
 </head>
 <body>
-    <h2>Bienvenu dans mon réseau social</h2>
+    <h2>Bienvenu sur Social network</h2>
 
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
         <h3>Login</h3>
