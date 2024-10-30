@@ -11,9 +11,10 @@ require 'form_securite.php';
 </head>
 <body>
     <h1>Social network</h1>
-    <form action="connexion.php" method="post">
+    <form action="connexion_PDO.php" method="post">
         <div>
         <h2>Formilaire d'incription</h2>
+        <p>* Champs obligatoirs</p>
         </div>
         <ul>
             <li>
