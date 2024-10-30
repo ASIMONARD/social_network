@@ -1,4 +1,5 @@
 <?php
+require 'form_inscription.php';
 
 $conn = new mysqli ('localhost', 'root', 'N@emie91', 'social_network');
 
@@ -13,7 +14,7 @@ $mail = $_POST['mail'];
 $genre = $_POST['genre'];
 
 
-$sql = "INSERT INTO utilisateurs ('nom', 'prenom', 'pseudo', 'mail', 'genre') VALUES ('$nom', '$prenom', '$pseudo', '$mail', '$gnre')";
+$sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, mail, genre) VALUES ('$nom', '$prenom', '$pseudo', '$mail', '$genre')";
 
 if (mysqli_query($conn, $sql)) {
     echo 'Inscription réussie';
