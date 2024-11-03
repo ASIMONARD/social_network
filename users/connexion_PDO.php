@@ -1,26 +1,25 @@
 <?php
+
+
 try {
     //Connection à la bas de donées
-    $pdo = new pdo ("mysql: host = localost; dnname = social_network", "root", "N@emie91");
+    $dsn = "mysql:host=localhost; dbname=social_network; charset=utf8mb4";
+    $pdo = new PDO($dsn, 'root', 'N@emie91');
 
     //Configuraton des erreurs pour les exceptions
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $pseudo = $_POST['pseudo'];
-    $mail = $_POST['mail'];
-    $genre = $_POST['genre'];
-
     //Préparation de la requête
-    $stmt = $pdo->prepare ("INSERT INTO utilisateurs (nom, prenom, pseudo, mail, genre) VALUES ('$nom', '$prenom', '$pseudo', '$mail', '$genre')");
+    $stmt = $pdo->prepare ("INSERT INTO utilisateurs (nom, prenom, pseudo, mail, genre, pswd1, pswd2) VALUES (:nom, :prenom, :pseudo, :mail, :genre, :pswd1, :pswd2)");
 
     //Lier les paramètres
     $stmt->bindParam(':nom', $nom);
-    $stmt->bindParam(':prenom', $nom);
-    $stmt->bindParam(':pseudo', $nom);
-    $stmt->bindParam(':mail', $nom);
-    $stmt->bindParam(':genre', $nom);
+    $stmt->bindParam(':prenom', $prenom);
+    $stmt->bindParam(':pseudo', $pseudo);
+    $stmt->bindParam(':mail', $mail);
+    $stmt->bindParam(':genre', $genre);
+    $stmt->bindParam(':pswd1', $pswd1);
+    $stmt->bindParam(':pswd2', $pswd2);
 
     //Exécution de la requête
     if ($stmt->execute()) {

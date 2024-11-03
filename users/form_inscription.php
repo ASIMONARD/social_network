@@ -1,5 +1,6 @@
 <?php
 require 'form_securite.php';
+require 'connexion_PDO.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +12,7 @@ require 'form_securite.php';
 </head>
 <body>
     <h1>Social network</h1>
-    <form action="connexion_PDO.php" method="post">
+    <form method="POST">
         <div>
         <h2>Formilaire d'incription</h2>
         <p>* Champs obligatoirs</p>
@@ -20,35 +21,48 @@ require 'form_securite.php';
             <li>
                 <label for="nom">Nom</label>
                 <input type="text" id="nom" placeholder="Entrez votre nom" name="nom">
-                <span class='error'>* <?php echo $nomErr; ?></span>
+                <span class='error'>* <?php if (isset($errors['nom1'])) echo $errors['nom1']; ?></span>
             </li>
             <br>
             <li>
                 <label for="prenom">Prénom</label>
                 <input type="text" id="prenom" placeholder= "Entrez votre prénom" name="prenom">
-                <span class='error'>* <?php echo $prenomErr; ?></span>
+                <span class='error'>* <?php if (isset($errors['prenom1'])) echo $errors['prenom1']; ?></span>
             </li>
             <br>
             <li>
                 <label for="pseudo">Pseudo</label>
                 <input type="text" id="pseudo" placeholder= "Entrez un pseudo" name="pseudo">
-                <span class='error'>* <?php echo $pseudoErr; ?></span>
+                <span class='error'>* <?php if (isset($errors['pseudo1'])) echo $errors['pseudo1']; ?></span>
             </li>
             <br>
             <li>
                 <label for="mail">Mail</label>
                 <input type="mail" id="mail" placeholder= "Entrez un E-mail" name="mail">
-                <span class='error'>* <?php echo $mailErr; ?></span>
+                <span class='error'>* <?php if (isset($errors['mail1'])) echo $errors['mail1']; ?></span>
+            </li>
             <br>
-            <select name="genre" id="genre">
+            <li><select name="genre" id="genre">
                 <option value="" disable selected>genre</option>
                 <option value="Masculin">Masculin</option>
                 <option value="Fémiin">Féminin</option>
-                <span class='error'>* <?php echo $genreErr; ?></span>
-            </select> *
+                <span class='error'>* <?php if (isset($errors['genre1'])) echo $errors['genre1']; ?></span>
+            </select> *</li>
+            <br>
+            <li>
+                <label for="pswd1">Choisir un mot de passe</label>
+                <input type="password" id="pswd1" placeholder= "Entrez un mot de passe" name="pswd1">
+                <span class='error'>* <?php if (isset($errors['pswd1-1'])) echo $errors['pswd1-1']; ?></span>
+            </li>
+            <br>
+            <li>
+                <label for="pswd2">Recoper le mot de passe</label>
+                <input type="password" id="pswd2" placeholder= "Entrez un mot de passe" name="pswd2">
+                <span class='error'>* <?php if (isset($errors['pswd2-1'])) echo $errors['pswd2-1']; ?></span>
+            </li>
         </ul>
         <br>
-            <input type="submit">
+            <input type="submit" name="enregistrer" value="Enregistrer">
     </form>
     
 </body>

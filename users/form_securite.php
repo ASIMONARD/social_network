@@ -1,57 +1,62 @@
 <?php
+require 'functions.php';
 
-//Foction de valisation du formuaire
-
-function test_input ($data) {
-    $data = trim($data);                //Supprime les espace avant et après la valeur
-    $data = stripslashes($data);        //Supprime les backslashes
-    $data = htmlspecialchars($data);    //Converti les caractères spéciux en entités HTML
-    return $data;
-}
-
-$nom = $prenom = $pseudo = $mail = $genre = "";
-$nomErr = $prenomErr = $pseudoErr = $mailErr = $genreErr = "";
+$nom = $prenom = $pseudo = $mail = $genre = $pswd1 = $pswd2 = "";
+$nomErr = $prenomErr = $pseudoErr = $mailErr = $genreErr = $pswd1Err = $pswd2Err =  "";
 
 //Champs obligatoirs
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_POST) {
+
+    $errors = array();
     
     if (empty($_POST['nom'])) {
-        $nomErr = "Le nom doit être renseigné";
+        $errors['nom1'] = "Le nom doit être renseigné";
     } else {
         $nom = test_input($_POST['nom']);
         if (!preg_match("/^[a-zA-Z-' ]*$/", $nom)) {                            //Avec validation du nom
-            $nomErr = "Seuls les stres et espaces blancs sont autorisés";
+            $errors['nom1'] = "Seuls les stres et espaces blancs sont autorisés";
         }
     }
     if (empty($_POST['prenom'])) {
-        $prenomErr = "Le prénom doit être renseigné";
+        $errors['prenom1'] = "Le prénom doit être renseigné";
     } else {
         $prenom = test_input($_POST['prenom']);                                 //Avec validation du prénom
         if (!preg_match("/^[a-zA-Z-'0-99 ]*$/", $prenom)) {
-            $prenomErr = "Seuls les lesstres et espaces blancs sont autorisés";
+            $errors['prenom1'] = "Seuls les lesstres et espaces blancs sont autorisés";
         }
     }
     if (empty($_POST['pseudo'])) {
-        $pseudoErr = "Le pseudo doit être renseigné";
+        $errors['pseudo1'] = "Le pseudo doit être renseigné";
     } else {
         $pseudo = test_input($_POST['pseudo']);
         if (!preg_match("/^[a-zA-Z-' ]*$/", $prenom)) {                         //avec validation du pseud
-            $nameErr = "Seuls les lesstres et espaces blancs sont autorisés";
+            $errors['pseudo1'] = "Seuls les lesstres et espaces blancs sont autorisés";
         }
     }
     if (empty($_POST['mail'])) {
-        $mailErr = "Le mail doit être renseigné";
+        $errors['mail1'] = "Le mail doit être renseigné";
     } else {
         $mail = test_input($_POST['mail']);
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {                        //Avec valisation de l'E-mail
-            $mailErr = 'Format de mail invalide';
+            $errors['mai1'] = 'Format de mail invalide';
         }
     }
     if (empty($_POST['genre'])) {
-        $genreErr = "Le genre doit être renseigné";
-    } else {
-        $genre = test_input($_POST['genre']);
+        $errors['genre1'] = "Le genre doit être renseigné";
+    }
+    if (empty($_POST['pswd1'])) {
+        $errors['pswd1-1'] = 'Vous devez créer un mot de passe';
+
+        //hachage du mot de passe
+        $hashedpaswd = password_hash($pswd1, PASSWORD_DEFAULT);
+    }
+    if (empty($_POST['pswd2']) || (($_POST['pswd2'])) != ($_POST['pswd1'])) {
+        $errors['pswd2-1'] = 'Le mot de passe ne correspod pas à celui entré au-dessus';
+    }
+    if (count($errors) == 0) {
+        header ('Location: connexion_PDO.php');
+        exit();
     }
 }
 ?>
